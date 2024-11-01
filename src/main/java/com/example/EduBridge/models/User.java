@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.UUID;
 
-@Entity(name = "Users")
+
+@MappedSuperclass
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class User {
