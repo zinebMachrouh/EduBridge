@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @DiscriminatorValue("Learners")
 public class Learner extends User{
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "class_id", nullable = false)
     private Class classEntity;

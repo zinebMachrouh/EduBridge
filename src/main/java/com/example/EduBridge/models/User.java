@@ -14,8 +14,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 public abstract class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(name = "fname", nullable = false)
     private String fname;

@@ -17,8 +17,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Class {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -34,6 +34,6 @@ public class Class {
     @JoinColumn(name = "trainer_id", nullable = false)
     private Trainer trainer;
 
-    @OneToMany(mappedBy = "class", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "classEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Learner> learners = new ArrayList<>();
 }
