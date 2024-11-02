@@ -1,7 +1,6 @@
 package com.example.EduBridge.models;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
