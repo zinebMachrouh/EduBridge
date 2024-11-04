@@ -1,7 +1,6 @@
 package com.example.EduBridge.services.impl;
 
 import com.example.EduBridge.dto.TrainingDTO;
-import com.example.EduBridge.exceptions.TrainingStatusException;
 import com.example.EduBridge.models.Training;
 import com.example.EduBridge.models.enums.TrainingStatus;
 import com.example.EduBridge.repositories.TrainingRepository;
@@ -24,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
