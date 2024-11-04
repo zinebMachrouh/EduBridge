@@ -3,12 +3,15 @@ package com.example.EduBridge.services.impl;
 import com.example.EduBridge.dto.TrainingDTO;
 import com.example.EduBridge.exceptions.AlreadyExistsException;
 import com.example.EduBridge.exceptions.DoesNotExistsException;
+import com.example.EduBridge.exceptions.TrainingStatusException;
 import com.example.EduBridge.models.Training;
 import com.example.EduBridge.repositories.TrainingRepository;
 import com.example.EduBridge.services.TrainingService;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -29,6 +32,8 @@ public class TrainingServiceImpl implements TrainingService {
     public TrainingDTO saveTraining(TrainingDTO trainingDTO) {
         if (trainingRepository.existsById(trainingDTO.getId())) {
             throw new AlreadyExistsException("Training with id " + trainingDTO.getId() + " already exists");
+        }else if (!isValidStatus(trainingDTO.getStatus().toString())) {
+            throw new TrainingStatusException("Invalid status: " + trainingDTO.getStatus());
         }
         Training training = modelMapper.map(trainingDTO, Training.class);
         training = trainingRepository.save(training);
@@ -48,13 +53,17 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public TrainingDTO updateTraining(TrainingDTO trainingDTO) {
-        if (trainingRepository.existsById(trainingDTO.getId())) {
-            Training training = modelMapper.map(trainingDTO, Training.class);
-            training = trainingRepository.save(training);
-            return modelMapper.map(training, TrainingDTO.class);
-        }else{
+        if (!isValidStatus(trainingDTO.getStatus().toString())) {
+            throw new TrainingStatusException("Invalid status: " + trainingDTO.getStatus());
+        }
+
+        if (!trainingRepository.existsById(trainingDTO.getId())) {
             throw new DoesNotExistsException("Training with id " + trainingDTO.getId() + " does not exist");
         }
+
+        Training training = modelMapper.map(trainingDTO, Training.class);
+        training = trainingRepository.save(training);
+        return modelMapper.map(training, TrainingDTO.class);
     }
 
     @Override
@@ -67,10 +76,18 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public List<TrainingDTO> getAllTraining() {
-        List<Training> trainings = trainingRepository.findAll();
-        return trainings.stream()
-                .map(training -> modelMapper.map(training, TrainingDTO.class))
-                .collect(Collectors.toList());
+    public Page<TrainingDTO> getAllTraining(Pageable pageable) {
+        Page<Training> trainingPage = trainingRepository.findAll(pageable);
+        return trainingPage.map(training -> modelMapper.map(training, TrainingDTO.class));
+    }
+
+    @Override
+    public Page<TrainingDTO> searchTrainingByTitle(String title, Pageable pageable) {
+        Page<Training> trainingPage = trainingRepository.findByTitleContainingIgnoreCase(title, pageable);
+        return trainingPage.map(training -> modelMapper.map(training, TrainingDTO.class));
+    }
+
+    private boolean isValidStatus(String status) {
+        return status.equalsIgnoreCase("SCHEDULED") || status.equalsIgnoreCase("ONGOING") || status.equalsIgnoreCase("COMPLETED") || status.equalsIgnoreCase("CANCELLED");
     }
 }

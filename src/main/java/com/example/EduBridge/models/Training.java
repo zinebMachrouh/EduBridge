@@ -44,6 +44,7 @@ public class Training {
     private Date endDate;
 
     @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private TrainingStatus status;
 
     @OneToMany(mappedBy = "training", cascade = CascadeType.ALL, orphanRemoval = true)

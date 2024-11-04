@@ -24,6 +24,10 @@ public class TrainingDTO {
     @Size(min = 3, max = 50, message = "title must be between 3 and 50 characters")
     private String title;
 
+    @NotBlank(message = "level is required")
+    @Size(min = 3, message = "level must be between 3 and 50 characters")
+    private String level;
+
     @NotBlank(message = "prerequisites is required")
     @Size(min = 3, message = "prerequisites must be between 3 and 50 characters")
     private String prerequisites;
