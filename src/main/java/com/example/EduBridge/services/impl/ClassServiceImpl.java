@@ -9,12 +9,13 @@ import com.example.EduBridge.services.ClassService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 @Validated
@@ -65,10 +66,18 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public List<ClassDTO> getAllClass() {
-        List<Class> classes = classRepository.findAll();
-        return classes.stream()
-                .map(classEntity -> modelMapper.map(classEntity, ClassDTO.class))
-                .collect(Collectors.toList());
+    public Page<ClassDTO> getAllClass(Pageable pageable) {
+        Page<Class> classes = classRepository.findAll(pageable);
+        return classes.map(classEntity -> modelMapper.map(classEntity, ClassDTO.class));
+    }
+
+    @Override
+    public Optional<ClassDTO> findClassByNameAndRoomNumber(String name, Integer roomNumber){
+        if (classRepository.findByNameAndRoomNumber(name, roomNumber).isPresent()) {
+            Class classEntity = classRepository.findByNameAndRoomNumber(name, roomNumber).get();
+            return Optional.of(modelMapper.map(classEntity, ClassDTO.class));
+        } else {
+            return Optional.empty();
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.EduBridge.models;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -8,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)

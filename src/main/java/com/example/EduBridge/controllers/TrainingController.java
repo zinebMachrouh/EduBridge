@@ -51,7 +51,7 @@ public class TrainingController {
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<TrainingDTO> trainingPage = trainingService.getAllTraining(pageable);
-        return ResponseEntity.ok(trainingPage); // HTTP 200 OK
+        return ResponseEntity.ok(trainingPage);
     }
 
     @GetMapping("/search")
@@ -61,6 +61,6 @@ public class TrainingController {
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<TrainingDTO> trainingPage = trainingService.searchTrainingByTitle(title, pageable);
-        return ResponseEntity.ok(trainingPage); // HTTP 200 OK
+        return ResponseEntity.ok(trainingPage);
     }
 }
