@@ -44,6 +44,7 @@ public class TrainerServiceImplTest {
                 .id(1L)
                 .fname("John")
                 .lname("Doe")
+                .email("john@gmail.com")
                 .speciality("Java")
                 .build();
 
@@ -51,6 +52,7 @@ public class TrainerServiceImplTest {
                 .id(1L)
                 .fname("John")
                 .lname("Doe")
+                .email("john@gmail.com")
                 .speciality("Java")
                 .build();
     }

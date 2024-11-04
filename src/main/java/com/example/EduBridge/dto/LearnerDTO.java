@@ -1,6 +1,6 @@
 package com.example.EduBridge.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -10,6 +10,6 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 public class LearnerDTO extends UserDTO{
-    @NotBlank(message = "class is required")
-    private ClassDTO classDTO;
+    @NotNull(message = "classDTO is required")
+    private ClassDTO classEntity;
 }
